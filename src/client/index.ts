@@ -35,7 +35,14 @@ const notificationClosed = (payload: NotificationEvent, sender: ISenderInfo) => 
     return "notificationClosed success";
 };
 
-const callbacks = { notificationClicked, notificationButtonClicked, notificationClosed};
+const notificationInputSubmitted = (payload: NotificationEvent, sender: ISenderInfo) => {
+    console.log("notificationInputSubmitted hit");
+    console.log("payload", payload);
+    console.log("sender", sender);
+    return "notificationInputSubmitted success";
+};
+
+const callbacks = { notificationClicked, notificationButtonClicked, notificationClosed, notificationInputSubmitted};
 
 async function createClientPromise() {
     await new Promise((resolve, reject) => {
@@ -109,5 +116,7 @@ export async function addEventListener(evt: string, cb: (payload: NotificationEv
         callbacks.notificationClosed = cb;
     } else if (evt === 'button-click') {
         callbacks.notificationButtonClicked = cb;
+    } else if (evt === 'input-submit') {
+        callbacks.notificationInputSubmitted = cb;
     }
 }
