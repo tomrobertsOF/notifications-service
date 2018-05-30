@@ -1,13 +1,14 @@
 import * as React from 'react';
-import { NotificationTime } from './NotificationTime';
-import { INotificationProps } from '../../models/INotificationProps';
-import { Fin } from "../../../fin";
+import { NotificationTime } from '../NotificationTime';
+import { Button } from '../Button';
+import { INotificationProps } from '../../../models/INotificationProps';
+import { Fin } from "../../../../fin";
 declare var fin: Fin;
 
 /**
- * Displays a single notification within the UI
+ * Displays a button notification within the UI
  */
-export class Notification extends React.Component<INotificationProps, {}> {
+export class ButtonNotification extends React.Component<INotificationProps, {}> {
 
     private handleNotificationClose(e: React.MouseEvent<HTMLElement>) {
         e.stopPropagation();
@@ -16,9 +17,16 @@ export class Notification extends React.Component<INotificationProps, {}> {
     }
 
     public render(): React.ReactNode {
+        let buttons = null;
+        if (this.props.meta.buttons) {
+            buttons = this.props.meta.buttons.map((button, idx) => {
+                return <Button key={idx} buttonIndex={idx} meta={this.props.meta}/>;
+            });
+        }
+
         return (
             <li className="notification-item" onClick={() => fin.notifications.clickHandler(this.props.meta)}>
-                <img className="notification-close-x" src="image/shapes/notifications-x.png" alt="" 
+                <img className="notification-close-x" src="image/shapes/notifications-x.png" alt=""
                     onClick={(e) => this.handleNotificationClose(e)}
                 />
                 <NotificationTime date={new Date(this.props.meta.date)} />
@@ -29,6 +37,9 @@ export class Notification extends React.Component<INotificationProps, {}> {
                     </div>
                     <div className="notification-body-title">{this.props.meta.title}</div>
                     <div className="notification-body-text">{this.props.meta.body}</div>
+                    <div id='notification-body-buttons'>
+                        {buttons}
+                    </div>
                 </div>
             </li>
         );

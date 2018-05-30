@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Fin } from "../../../fin";
-import { INotificationButton, INotificationButtonProps } from '../../models/INotificationButton';
+import { INotificationButtonProps } from '../../models/INotificationButton';
 
 declare var fin: Fin;
 
-export class Button extends React.Component<INotificationButtonProps, INotificationButton> {
+export class Button extends React.Component<INotificationButtonProps, {}> {
 
     private handleButtonClick(e: React.MouseEvent<HTMLElement>) {
         e.stopPropagation();

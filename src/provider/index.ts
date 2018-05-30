@@ -42,7 +42,7 @@ async function registerService() {
     providerChannel.register('notification-closed', notificationClosed);
     providerChannel.register('fetch-all-notifications', fetchAllNotifications);
     providerChannel.register('clear-all-notifications', clearAllNotifications);
-
+    providerChannel.register('notification-input-submitted', notificationInputSubmitted);
     // Functions called within the Service
     window.fin.notifications = {
         notificationCreated: async (payload: Notification & ISenderInfo) => {
@@ -84,6 +84,11 @@ async function registerService() {
         allNotificationsCleared: async (payload: NotificationEvent) => {
             const providerChannelPlugin = await providerChannel;
             const success = await providerChannelPlugin.dispatch(serviceSenderInfo, 'all-notifications-cleared', payload);
+            console.log("success", success);
+        },
+        notificationInputSubmitted: async (payload: Notification & ISenderInfo & { inputInfo: {name: string, value: string }} ) => {
+            const providerChannelPlugin = await providerChannel;
+            const success = await providerChannelPlugin.dispatch({ name: payload.name, uuid: payload.uuid }, 'notification-input-submitted', payload);
             console.log("success", success);
         }
     };
@@ -244,6 +249,22 @@ function notificationButtonClicked(payload: Notification & ISenderInfo & { butto
 
     // TODO: What should we return?
     return "notificationButtonClicked returned";
+}
+
+function notificationInputSubmitted(payload: Notification & ISenderInfo & { formInfo: {name: string, value: string} } , sender: ISenderInfo) {
+    // For testing/display purposes
+    console.log("notificationButtonClicked hit");
+
+    console.log("payload", payload);
+    console.log("sender", sender);
+
+    testDisplay('notificationInputSubmitted', payload, sender);
+
+    // Send notification clicked event to uuid with the context.
+    fin.notifications.notificationInputSubmitted(payload);
+
+    // TODO: What should we return?
+    return "notificationInputSubmitted returned";
 }
 
 /**

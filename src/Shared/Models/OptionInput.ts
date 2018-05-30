@@ -3,5 +3,5 @@
  */
 export interface OptionInput {
     name: string;
-    placeholder: string;
+    placeholder?: string;
 }

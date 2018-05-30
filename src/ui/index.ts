@@ -86,6 +86,12 @@ fin.desktop.main(async () => {
             const success = await plugin.dispatch('clear-app-notifications', payload);
             console.log("success", success);
         },
+        notificationInputSubmitted: async (payload: Notification & ISenderInfo, formInfo: {name: string, value: string}) => {
+            const plugin = await pluginP;
+            const fullPayload = Object.assign({}, payload, {formInfo});
+            const success = await plugin.dispatch('notification-input-submitted', fullPayload);
+            console.log("success", success);
+        },
         addEventListener: async (event: string, cb: (payload: Notification | ISenderInfo, sender: ISenderInfo) => string) => {
             if (event === 'notificationCreated') {
                 callbacks.notificationCreated = cb;

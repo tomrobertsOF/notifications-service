@@ -32,11 +32,28 @@ let buttonNote = {
     ] 
 };
 
+let inputNote = { 
+    body: 'Notification Body', 
+    title: 'Notification Title ', 
+    subtitle: 'testSubtitle', 
+    icon: 'favicon.ico', 
+    context: { testContext: 'testContext' }, 
+    inputs: [
+        { name: 'test1' }
+    ] 
+};
+
 function makeNoteOfType(index) {
-    if (index % 2 === 1) {
-        return makeNote(`1q2w3e4r${index}`, Object.assign({}, normalNote, { date: Date.now() }))
-    } else {
-        return makeNote(`1q2w3e4r${index}`, Object.assign({}, buttonNote, { date: Date.now() }))
+    switch(index % 3){
+        case 0: {
+            return makeNote(`1q2w3e4r${index}`, Object.assign({}, normalNote, { date: Date.now() }))
+        }
+        case 1: {
+            return makeNote(`1q2w3e4r${index}`, Object.assign({}, buttonNote, { date: Date.now() }))
+        }
+        case 2: {
+            return makeNote(`1q2w3e4r${index}`, Object.assign({}, inputNote, { date: Date.now() }))
+        }
     }
 }
 

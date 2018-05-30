@@ -21,4 +21,5 @@ export interface Notification extends Entity {
     buttons: OptionButton[];
     inputs: OptionInput[];
     type?: NotificationTypes;
+    buttonIndex?: number;
 }
