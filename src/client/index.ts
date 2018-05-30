@@ -58,6 +58,8 @@ async function createClientPromise() {
     client.register('notification-clicked', (payload: Notification & ISenderInfo, sender: ISenderInfo) => { callbacks.notificationClicked(payload, sender); });
     client.register('notification-button-clicked', (payload: Notification & ISenderInfo & { buttonIndex: number }, sender: ISenderInfo) => { callbacks.notificationButtonClicked(payload, sender); });
     client.register('notification-closed', (payload: Notification & ISenderInfo, sender: ISenderInfo) => { callbacks.notificationClosed(payload, sender); });
+    client.register('notification-input-submitted', (payload: Notification & ISenderInfo & { formInfo: {name: string, value: string} }, sender: ISenderInfo) => { callbacks.notificationInputSubmitted(payload, sender); });
+
     return client;
 }
 
